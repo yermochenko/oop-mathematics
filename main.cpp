@@ -3,8 +3,36 @@
 #include <fstream>
 using namespace std;
 
+#include "matrix.h"
+
 int main()
 {
+	/* example of using class Matrix */
+	cout << "Input matrix size: ";
+	int size;
+	cin >> size;
+	Matrix *matrix = new Matrix(size, size);
+	cout << "Input matrix elements:" << endl;
+	double element;
+	for(int i = 0; i < matrix->rowsCount(); i++)
+	{
+		for(int j = 0; j < matrix->colsCount(); j++)
+		{
+			cin >> element;
+			matrix->set(i, j, element);
+		}
+	}
+	cout << "Matrix after transponing:" << endl;
+	for(int i = 0; i < matrix->rowsCount(); i++)
+	{
+		for(int j = 0; j < matrix->colsCount(); j++)
+		{
+			cout << matrix->get(j, i) << '\t';
+		}
+		cout << endl;
+	}
+	delete matrix;
+
 	double A[10][10];
 
 	setlocale(LC_ALL, "rus");
