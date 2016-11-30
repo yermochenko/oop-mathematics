@@ -44,7 +44,6 @@ int main()
 
 	int m = n + 1;//столбец свободных членов
 
-
 	for (int i = 0; i<n; i++)
 	{
 		for (int j = 0; j<m; j++){
@@ -56,21 +55,21 @@ int main()
 	fs.close();
 	//Метод Жердана-Гаусса
 	//Прямой ход, приведение к верхнетреугольному виду
-	double  f, f1, g;
+	double g;
 	for (int i = 0; i<n; i++)
 	{
 		// проверка на 0
 		if (A[i][i] == 0)
 		{
-			for (int l = i + 1; l<n; l++)
+			for (int k = i + 1; k<n; k++)
 			{
-				if (A[l][i] != 0)
+				if (A[k][i] != 0)
 				{
-					for (int t = 0; t<m; t++)
+					for (int j = 0; j<m; j++)
 					{
-						f1 = A[i][t];
-						A[i][t] = A[l][t];
-						A[l][t] = f1;
+						g = A[i][j];
+						A[i][j] = A[k][j];
+						A[k][j] = g;
 					}
 				}
 				else{
@@ -79,22 +78,22 @@ int main()
 				}
 			}
 		}//Конец проверки на 0
-		f = A[i][i];
+		g = A[i][i];
 
 		for (int j = 0; j<m; j++)
 		{
-			A[i][j] /= f;
+			A[i][j] /= g;
 		}
-		for (int h = 0; h<n; h++)
+		for (int k = 0; k<n; k++)
 		{
-			if (h != i)
+			if (k != i)
 			{
 
-				g = A[h][i];
+				g = A[k][i];
 
-				for (int k = 0; k<m; k++)
+				for (int j = 0; j<m; j++)
 				{
-					A[h][k] = -g*A[i][k] + A[h][k];//делаем нули
+					A[k][j] = -g*A[i][j] + A[k][j];//делаем нули
 
 				}
 
@@ -103,13 +102,10 @@ int main()
 		}
 	}
 
-
-
-
-
 	for (int i = 0; i<n; i++)
 	{
-		for (int j = 0; j<m; j++){
+		for (int j = 0; j<m; j++)
+		{
 			fs >> A[i][j];
 			cout << "  " << A[i][j];
 		}
@@ -118,7 +114,9 @@ int main()
 	//Выводим решение
 
 	for (int i = 0; i < n; i++)
+	{
 		cout << "x[" << i << "] = " << floor(A[i][m - 1] * 1000) / 1000 << " " << endl;
+	}
 	cout << endl;
 	return 0;
 }
