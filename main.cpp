@@ -7,115 +7,85 @@ using namespace std;
 
 int main()
 {
-	/* example of using class Matrix */
-	cout << "Input matrix size: ";
-	int size;
-	cin >> size;
-	Matrix *matrix = new Matrix(size, size);
-	cout << "Input matrix elements:" << endl;
-	double element;
-	for(int i = 0; i < matrix->rowsCount(); i++)
-	{
-		for(int j = 0; j < matrix->colsCount(); j++)
-		{
-			cin >> element;
-			matrix->set(i, j, element);
-		}
-	}
-	cout << "Matrix after transponing:" << endl;
-	for(int i = 0; i < matrix->rowsCount(); i++)
-	{
-		for(int j = 0; j < matrix->colsCount(); j++)
-		{
-			cout << matrix->get(j, i) << '\t';
-		}
-		cout << endl;
-	}
-	delete matrix;
-
-	double A[10][10];
-
 	setlocale(LC_ALL, "rus");
-
 	fstream fs("text.txt");//читаем из файла
-
-	int n;
+	unsigned int n;
 	fs >> n;
-
-	int m = n + 1;//столбец свободных членов
-
-	for (int i = 0; i<n; i++)
+	double e;
+	Matrix *matrix = new Matrix(n, n + 1);
+	for (unsigned int i = 0; i < matrix->rowsCount(); i++)
 	{
-		for (int j = 0; j<m; j++){
-			fs >> A[i][j];
-			cout << "  " << A[i][j];
+		for (unsigned int j = 0; j < matrix->colsCount(); j++)
+		{
+			fs >> e;
+			matrix->set(i, j, e);
+			cout << e << "\t";
 		}
 		cout << endl;
 	}
 	fs.close();
+
 	//Метод Жердана-Гаусса
 	//Прямой ход, приведение к верхнетреугольному виду
-	double g;
-	for (int i = 0; i<n; i++)
+	double  f;
+	for (unsigned int i = 0; i < matrix->rowsCount(); i++)
 	{
 		// проверка на 0
-		if (A[i][i] == 0)
+		if (matrix->get(i, i) == 0)
 		{
-			for (int k = i + 1; k<n; k++)
+			bool error = true;
+			for (unsigned int k = i + 1; error && k < matrix->rowsCount(); k++)
 			{
-				if (A[k][i] != 0)
+				if (matrix->get(k, i) != 0)
 				{
-					for (int j = 0; j<m; j++)
+					error = false;
+					double f1;
+					for (unsigned int j = 0; j < matrix->colsCount(); j++)
 					{
-						g = A[i][j];
-						A[i][j] = A[k][j];
-						A[k][j] = g;
+						f1 = matrix->get(i, j);
+						matrix->set(i, j, matrix->get(k, j));
+						matrix->set(k, j, f1);
 					}
 				}
-				else{
-					cout << "Нет единственного решения" << endl;
-					return 0;
-				}
+			}
+			if(error)
+			{
+				cout << "Нет единственного решения" << endl;
+				return 0;				
 			}
 		}//Конец проверки на 0
-		g = A[i][i];
-
-		for (int j = 0; j<m; j++)
+		f = matrix->get(i, i);
+		for (unsigned int j = 0; j < matrix->colsCount(); j++)
 		{
-			A[i][j] /= g;
+			matrix->set(i, j, matrix->get(i, j) / f);
 		}
-		for (int k = 0; k<n; k++)
+		for (unsigned int k = 0; k < matrix->rowsCount(); k++)
 		{
 			if (k != i)
 			{
-
-				g = A[k][i];
-
-				for (int j = 0; j<m; j++)
+				double g = matrix->get(k, i);
+				for (unsigned int j = 0; j < matrix->colsCount(); j++)
 				{
-					A[k][j] = -g*A[i][j] + A[k][j];//делаем нули
-
+					matrix->set(k, j, -g * matrix->get(i, j) + matrix->get(k, j));//делаем нули
 				}
-
 			}
-			//if (j == i) continue;
 		}
 	}
 
-	for (int i = 0; i<n; i++)
+	// Вывод полученной матрицы
+	for (unsigned int i = 0; i < matrix->rowsCount(); i++)
 	{
-		for (int j = 0; j<m; j++)
+		for (unsigned int j = 0; j < matrix->colsCount(); j++)
 		{
-			fs >> A[i][j];
-			cout << "  " << A[i][j];
+			cout << matrix->get(i, j) << "  ";
 		}
 		cout << endl;
 	}
 	//Выводим решение
 
-	for (int i = 0; i < n; i++)
+	for (unsigned int i = 0; i < matrix->rowsCount(); i++)
 	{
-		cout << "x[" << i << "] = " << floor(A[i][m - 1] * 1000) / 1000 << " " << endl;
+		cout << "x[" << i << "] = " << matrix->get(i, matrix->colsCount() - 1) << " " << endl;
 	}
 	cout << endl;
 	return 0;
