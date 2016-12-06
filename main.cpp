@@ -72,17 +72,7 @@ int main()
 		}
 	}
 
-	// Вывод полученной матрицы
-	for (unsigned int i = 0; i < matrix->rowsCount(); i++)
-	{
-		for (unsigned int j = 0; j < matrix->colsCount(); j++)
-		{
-			cout << matrix->get(i, j) << "  ";
-		}
-		cout << endl;
-	}
 	//Выводим решение
-
 	for (unsigned int i = 0; i < matrix->rowsCount(); i++)
 	{
 		cout << "x[" << i << "] = " << matrix->get(i, matrix->colsCount() - 1) << " " << endl;
