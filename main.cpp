@@ -5,14 +5,7 @@ using namespace std;
 
 #include "matrix.h"
 #include "struct.h"
-
-class Problem
-{
-public:
-	Matrix* matrix;
-	bool error;
-	int i, j, k;
-};
+#include "problem.h"
 
 class ErrorCondition: public Condition
 {
