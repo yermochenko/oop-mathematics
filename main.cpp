@@ -6,29 +6,7 @@ using namespace std;
 #include "matrix.h"
 #include "struct.h"
 #include "problem.h"
-
-class ErrorCondition: public Condition
-{
-	Problem* problem;
-public:
-	ErrorCondition(Problem* problem)
-	{
-		this->problem = problem;
-	}
-	bool check()
-	{
-		return problem->error;
-	}
-};
-
-class ErrorStatement: public Statement
-{
-public:
-	void execute()
-	{
-		throw "Нет единственного решения";
-	}
-};
+#include "jg_if_error.h"
 
 class ExchangeRowsElementInitStatement: public Statement
 {
