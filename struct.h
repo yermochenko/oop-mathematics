@@ -5,12 +5,14 @@ class Condition
 {
 public:
 	virtual bool check() = 0;
+	virtual ~Condition() {}
 };
 
 class Statement
 {
 public:
 	virtual void execute() = 0;
+	virtual ~Statement() {}
 };
 
 class If: public Statement {
