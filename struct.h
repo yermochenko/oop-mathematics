@@ -21,4 +21,14 @@ public:
 	void execute();
 };
 
+class For: public Statement {
+	Statement *init;
+	Condition *condition;
+	Statement *endIteration;
+	Statement *body;
+public:
+	For(Statement *init, Condition *condition, Statement *endIteration, Statement *body);
+	void execute();
+};
+
 #endif

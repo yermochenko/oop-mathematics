@@ -13,3 +13,19 @@ void If::execute()
 		statement->execute();
 	}
 }
+
+For::For(Statement *init, Condition *condition, Statement *endIteration, Statement *body)
+{
+	this->init = init;
+	this->condition = condition;
+	this->endIteration = endIteration;
+	this->body = body;
+}
+
+void For::execute()
+{
+	for(init->execute(); condition->check(); endIteration->execute())
+	{
+		body->execute();
+	}
+}
