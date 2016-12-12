@@ -7,20 +7,9 @@ using namespace std;
 #include "struct.h"
 #include "problem.h"
 #include "jg_if_error.h"
+#include "jg_for_exchange_rows.h"
+#include "jg_if_non_zero.h"
 
-class ExchangeRowsElementInitStatement: public Statement
-{
-	Problem *problem;
-public:
-	ExchangeRowsElementInitStatement(Problem *problem)
-	{
-		this->problem = problem;
-	}
-	void execute()
-	{
-		problem->j = 0;
-	}
-};
 
 class ExchangeRowsElementCondition: public Condition
 {
@@ -66,19 +55,7 @@ public:
 	}
 };
 
-class NonZeroElementCondition: public Condition
-{
-	Problem *problem;
-public:
-	NonZeroElementCondition(Problem *problem)
-	{
-		this->problem = problem;
-	}
-	bool check()
-	{
-		return problem->matrix->get(problem->k, problem->i) != 0;
-	}
-};
+// jg_if_non_zero.h
 
 class NonZeroElementStatement: public Statement
 {
