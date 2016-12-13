@@ -7,9 +7,10 @@ using namespace std;
 #include "struct.h"
 #include "problem.h"
 #include "jg_if_error.h"
-#include "jg_for_exchange_rows.h"
+//#include "jg_for_exchange_rows.h"
 #include "jg_if_non_zero.h"
-#include "jg_for_input_row_from_stream.h"
+//#include "jg_for_input_row_from_stream.h"
+#include "jg_for_input_matrix_from_stream.h"
 
 int main()
 {
@@ -22,28 +23,43 @@ int main()
 	problem.fs->operator>>(n);
 	double e;
 	problem.matrix = new Matrix(n, n + 1);
-	Statement *inputRowFromStreamInitStatement = new InputRowFromStreamInitStatement(&problem);
+
+	Statement *inputMatrixFromStreamInitStatement = new InputMatrixFromStreamInitStatement(&problem);
+	Condition *inputMatrixFromStreamCondition = new InputMatrixFromStreamCondition(&problem);
+	Statement *inputMatrixFromStreamEndIterationStatement = new InputMatrixFromStreamEndIterationStatement(&problem);
+	Statement *inputMatrixFromStreamBodyStatement = new InputMatrixFromStreamBodyStatement(&problem);
+	For *inputMatrixFromStream = new For(inputMatrixFromStreamInitStatement, inputMatrixFromStreamCondition, inputMatrixFromStreamEndIterationStatement, inputMatrixFromStreamBodyStatement);
+
+	/*Statement *inputRowFromStreamInitStatement = new InputRowFromStreamInitStatement(&problem);
 	Condition *inputRowFromStreamCondition = new InputRowFromStreamCondition(&problem);
 	Statement *inputRowFromStreamEndIterationStatement = new InputRowFromStreamEndIterationStatement(&problem);
 	Statement *inputRowFromStreamBodyStatement = new InputRowFromStreamBodyStatement(&problem);
 	For *inputRowFromStream = new For(inputRowFromStreamInitStatement, inputRowFromStreamCondition, inputRowFromStreamEndIterationStatement, inputRowFromStreamBodyStatement);
 	for (problem.i = 0; problem.i < problem.matrix->rowsCount(); problem.i++)
 	{
-		/*for (unsigned int j = 0; j < problem.matrix->colsCount(); j++)
+		for (unsigned int j = 0; j < problem.matrix->colsCount(); j++)
 		{
 			fs >> e;
 			problem.matrix->set(i, j, e);
 			cout << e << "\t";
-		}*/
+		}
 		inputRowFromStream->execute();
 		cout << endl;
 	}
-	fs.close();
 	delete inputRowFromStream;
 	delete inputRowFromStreamInitStatement;
 	delete inputRowFromStreamCondition;
 	delete inputRowFromStreamEndIterationStatement;
-	delete inputRowFromStreamBodyStatement;
+	delete inputRowFromStreamBodyStatement;*/
+	inputMatrixFromStream->execute();
+
+	delete inputMatrixFromStream;
+	delete inputMatrixFromStreamInitStatement;
+	delete inputMatrixFromStreamCondition;
+	delete inputMatrixFromStreamEndIterationStatement;
+	delete inputMatrixFromStreamBodyStatement;
+
+	fs.close();
 
 	//Метод Жердана-Гаусса
 	//Прямой ход, приведение к верхнетреугольному виду

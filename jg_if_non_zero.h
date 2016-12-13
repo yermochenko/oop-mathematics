@@ -8,6 +8,8 @@
 #ifndef JG_IF_NON_ZERO_H_
 #define JG_IF_NON_ZERO_H_
 
+#include "jg_for_exchange_rows.h"
+
 class NonZeroElementCondition: public Condition
 {
 	Problem *problem;
