@@ -22,6 +22,37 @@ public:
 	}
 };
 
-
+class NonZeroElementStatement: public Statement
+{
+	Problem *problem;
+	Statement *exchangeRowsElementInitStatement;
+	Condition *exchangeRowsElementCondition;
+	Statement *exchangeRowsElementEndIterationStatement;
+	Statement *exchangeRowsElementBodyStatement;
+	For *exchangeRowsElementFor;
+public:
+	NonZeroElementStatement(Problem *problem)
+	{
+		this->problem = problem;
+		exchangeRowsElementInitStatement = new ExchangeRowsElementInitStatement(problem);
+		exchangeRowsElementCondition = new ExchangeRowsElementCondition(problem);
+		exchangeRowsElementEndIterationStatement = new ExchangeRowsElementEndIterationStatement(problem);
+		exchangeRowsElementBodyStatement = new ExchangeRowsElementBodyStatement(problem);
+		exchangeRowsElementFor = new For(exchangeRowsElementInitStatement, exchangeRowsElementCondition, exchangeRowsElementEndIterationStatement, exchangeRowsElementBodyStatement);
+	}
+	void execute()
+	{
+		problem->error = false;
+		exchangeRowsElementFor->execute();
+	}
+	~NonZeroElementStatement()
+	{
+		delete exchangeRowsElementFor;
+		delete exchangeRowsElementInitStatement;
+		delete exchangeRowsElementCondition;
+		delete exchangeRowsElementEndIterationStatement;
+		delete exchangeRowsElementBodyStatement;
+	}
+};
 
 #endif /* JG_IF_NON_ZERO_H_ */
