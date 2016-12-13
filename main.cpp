@@ -9,27 +9,41 @@ using namespace std;
 #include "jg_if_error.h"
 #include "jg_for_exchange_rows.h"
 #include "jg_if_non_zero.h"
+#include "jg_for_input_row_from_stream.h"
 
 int main()
 {
 	setlocale(LC_ALL, "rus");
 	fstream fs("text.txt");//читаем из файла
-	unsigned int n;
-	fs >> n;
-	double e;
 	Problem problem;
+	problem.fs = &fs;
+	unsigned int n;
+	//fs >> n;
+	problem.fs->operator>>(n);
+	double e;
 	problem.matrix = new Matrix(n, n + 1);
-	for (unsigned int i = 0; i < problem.matrix->rowsCount(); i++)
+	Statement *inputRowFromStreamInitStatement = new InputRowFromStreamInitStatement(&problem);
+	Condition *inputRowFromStreamCondition = new InputRowFromStreamCondition(&problem);
+	Statement *inputRowFromStreamEndIterationStatement = new InputRowFromStreamEndIterationStatement(&problem);
+	Statement *inputRowFromStreamBodyStatement = new InputRowFromStreamBodyStatement(&problem);
+	For *inputRowFromStream = new For(inputRowFromStreamInitStatement, inputRowFromStreamCondition, inputRowFromStreamEndIterationStatement, inputRowFromStreamBodyStatement);
+	for (problem.i = 0; problem.i < problem.matrix->rowsCount(); problem.i++)
 	{
-		for (unsigned int j = 0; j < problem.matrix->colsCount(); j++)
+		/*for (unsigned int j = 0; j < problem.matrix->colsCount(); j++)
 		{
 			fs >> e;
 			problem.matrix->set(i, j, e);
 			cout << e << "\t";
-		}
+		}*/
+		inputRowFromStream->execute();
 		cout << endl;
 	}
 	fs.close();
+	delete inputRowFromStream;
+	delete inputRowFromStreamInitStatement;
+	delete inputRowFromStreamCondition;
+	delete inputRowFromStreamEndIterationStatement;
+	delete inputRowFromStreamBodyStatement;
 
 	//Метод Жердана-Гаусса
 	//Прямой ход, приведение к верхнетреугольному виду

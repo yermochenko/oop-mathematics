@@ -4,6 +4,7 @@
 class Problem
 {
 public:
+	fstream* fs;
 	Matrix* matrix;
 	bool error;
 	int i, j, k;
