@@ -11,6 +11,7 @@ using namespace std;
 #include "jg_if_non_zero.h"
 //#include "jg_for_input_row_from_stream.h"
 #include "jg_for_input_matrix_from_stream.h"
+#include "jg_for_output_matrix.h"
 
 int main()
 {
@@ -61,7 +62,7 @@ int main()
 
 	fs.close();
 
-	//Метод Жердана-Гаусса
+	//Метод Жордана-Гаусса
 	//Прямой ход, приведение к верхнетреугольному виду
 	Condition *errorCondition = new ErrorCondition(&problem);
 	Statement *errorStatement = new ErrorStatement();
@@ -91,7 +92,8 @@ int main()
 			}
 			for (unsigned int k = 0; k < problem.matrix->rowsCount(); k++)
 			{
-				if (k != problem.i)
+				if (k != problem.i
+						)
 				{
 					double g = problem.matrix->get(k, problem.i);
 					for (unsigned int j = 0; j < problem.matrix->colsCount(); j++)
@@ -102,12 +104,18 @@ int main()
 			}
 		}
 
-		//Выводим решение
-		for (unsigned int i = 0; i < problem.matrix->rowsCount(); i++)
-		{
-			cout << "x[" << i << "] = " << problem.matrix->get(i, problem.matrix->colsCount() - 1) << " " << endl;
-		}
+     	Statement *outputMatrixInitStatement = new OutputMatrixInitStatement(&problem);
+		Condition *outputMatrixCondition = new OutputMatrixCondition(&problem);
+		Statement *outputMatrixEndIterationStatement = new OutputMatrixEndIterationStatement(&problem);
+		Statement *outputMatrixBodyStatement = new OutputMatrixBodyStatement(&problem);
+		For *outputMatrix = new For(outputMatrixInitStatement, outputMatrixCondition, outputMatrixEndIterationStatement, outputMatrixBodyStatement);
+		outputMatrix->execute();
 		cout << endl;
+		delete outputMatrixInitStatement;
+		delete outputMatrixCondition;
+		delete outputMatrixEndIterationStatement;
+		delete outputMatrixBodyStatement;
+		delete outputMatrix;
 	}
 	catch(char *message)
 	{
