@@ -7,11 +7,9 @@ using namespace std;
 #include "struct.h"
 #include "problem.h"
 #include "jg_if_error.h"
-//#include "jg_for_exchange_rows.h"
-#include "jg_if_non_zero.h"
-//#include "jg_for_input_row_from_stream.h"
 #include "jg_for_input_matrix_from_stream.h"
 #include "jg_for_output_matrix.h"
+#include "jg_for_non_zero.h"
 
 int main()
 {
@@ -67,9 +65,11 @@ int main()
 	Condition *errorCondition = new ErrorCondition(&problem);
 	Statement *errorStatement = new ErrorStatement();
 	If *errorIf = new If(errorCondition, errorStatement);
-	Condition *nonZeroElementCondition = new NonZeroElementCondition(&problem);
-	Statement *nonZeroElementStatement = new NonZeroElementStatement(&problem);
-	If *nonZeroElementIf = new If(nonZeroElementCondition, nonZeroElementStatement);
+	NonZeroElementForInitStatement *nonZeroElementForInitStatement = new NonZeroElementForInitStatement(&problem);
+	NonZeroElementForCondition *nonZeroElementForCondition = new NonZeroElementForCondition(&problem);
+	NonZeroElementForEndIterationStatement *nonZeroElementForEndIterationStatement = new NonZeroElementForEndIterationStatement(&problem);
+	NonZeroElementForBodyStatement *nonZeroElementForBodyStatement = new NonZeroElementForBodyStatement(&problem);
+	For *nonZeroElementFor = new For(nonZeroElementForInitStatement, nonZeroElementForCondition, nonZeroElementForEndIterationStatement, nonZeroElementForBodyStatement);
 	try
 	{
 		double  f;
@@ -79,10 +79,7 @@ int main()
 			if (problem.matrix->get(problem.i, problem.i) == 0)
 			{
 				problem.error = true;
-				for (problem.k = problem.i + 1; problem.error && problem.k < problem.matrix->rowsCount(); problem.k++)
-				{
-					nonZeroElementIf->execute();
-				}
+				nonZeroElementFor->execute();
 				errorIf->execute();
 			}//Конец проверки на 0
 			f = problem.matrix->get(problem.i, problem.i);
@@ -121,12 +118,14 @@ int main()
 	{
 		cout << message << endl;
 	}
+	delete nonZeroElementFor;
+	delete nonZeroElementForInitStatement;
+	delete nonZeroElementForCondition;
+	delete nonZeroElementForEndIterationStatement;
+	delete nonZeroElementForBodyStatement;
 	delete errorIf;
 	delete errorStatement;
 	delete errorCondition;
-	delete nonZeroElementIf;
-	delete nonZeroElementStatement;
-	delete nonZeroElementCondition;
 	delete problem.matrix;
 	return 0;
 }
