@@ -89,13 +89,12 @@ int main()
 			}
 			for (unsigned int k = 0; k < problem.matrix->rowsCount(); k++)
 			{
-				if (k != problem.i
-						)
+				if (k != problem.i)
 				{
-					double g = problem.matrix->get(k, problem.i);
+					f = problem.matrix->get(k, problem.i);
 					for (unsigned int j = 0; j < problem.matrix->colsCount(); j++)
 					{
-						problem.matrix->set(k, j, -g * problem.matrix->get(problem.i, j) + problem.matrix->get(k, j));//делаем нули
+						problem.matrix->set(k, j, -f * problem.matrix->get(problem.i, j) + problem.matrix->get(k, j));//делаем нули
 					}
 				}
 			}
