@@ -10,6 +10,9 @@ using namespace std;
 #include "jg_for_input_matrix_from_stream.h"
 #include "jg_for_output_matrix.h"
 #include "jg_for_non_zero.h"
+#include "jg_for_one_diagonal_element.h"
+#include "jg_ for_computation.h"
+
 
 int main()
 {
@@ -70,9 +73,24 @@ int main()
 	NonZeroElementForEndIterationStatement *nonZeroElementForEndIterationStatement = new NonZeroElementForEndIterationStatement(&problem);
 	NonZeroElementForBodyStatement *nonZeroElementForBodyStatement = new NonZeroElementForBodyStatement(&problem);
 	For *nonZeroElementFor = new For(nonZeroElementForInitStatement, nonZeroElementForCondition, nonZeroElementForEndIterationStatement, nonZeroElementForBodyStatement);
+
+	Statement *oneDiagonalElementInitStatement = new OneDiagonalElementInitStatement(&problem);
+	Condition *oneDiagonalElementCondition = new OneDiagonalElementCondition(&problem);
+	Statement *oneDiagonalElementEndIterationStatement = new OneDiagonalElementEndIterationStatement(&problem);
+	Statement *oneDiagonalElementBodyStatement = new OneDiagonalElementBodyStatement(&problem);
+	For *oneDiagonalElement = new For(oneDiagonalElementInitStatement, oneDiagonalElementCondition, oneDiagonalElementEndIterationStatement, oneDiagonalElementBodyStatement);
+ 	Statement *outputMatrixInitStatement = new OutputMatrixInitStatement(&problem);
+	Condition *outputMatrixCondition = new OutputMatrixCondition(&problem);
+	Statement *outputMatrixEndIterationStatement = new OutputMatrixEndIterationStatement(&problem);
+	Statement *outputMatrixBodyStatement = new OutputMatrixBodyStatement(&problem);
+	For *outputMatrix = new For(outputMatrixInitStatement, outputMatrixCondition, outputMatrixEndIterationStatement, outputMatrixBodyStatement);
+	Statement *computationForInitStatement = new ComputationForInitStatement(&problem);
+	Condition *computationForCondition = new ComputationForCondition(&problem);
+	Statement *computationForEndIterationStatement = new ComputationForEndIterationStatement(&problem);
+	Statement *computationForBodyStatement = new ComputationForBodyStatement(&problem);
+	For *computationFor = new For(computationForInitStatement, computationForCondition, computationForEndIterationStatement, computationForBodyStatement);
 	try
 	{
-		double  f;
 		for (problem.i = 0; problem.i < problem.matrix->rowsCount(); problem.i++)
 		{
 			// проверка на 0
@@ -82,41 +100,34 @@ int main()
 				nonZeroElementFor->execute();
 				errorIf->execute();
 			}// онец проверки на 0
-			f = problem.matrix->get(problem.i, problem.i);
-			for (unsigned int j = 0; j < problem.matrix->colsCount(); j++)
+			problem.f = problem.matrix->get(problem.i, problem.i);
+            oneDiagonalElement->execute();
+			for (problem.k = 0; problem.k < problem.matrix->rowsCount(); problem.k++)
 			{
-				problem.matrix->set(problem.i, j, problem.matrix->get(problem.i, j) / f);
-			}
-			for (unsigned int k = 0; k < problem.matrix->rowsCount(); k++)
-			{
-				if (k != problem.i)
+				if (problem.k != problem.i)
 				{
-					f = problem.matrix->get(k, problem.i);
-					for (unsigned int j = 0; j < problem.matrix->colsCount(); j++)
-					{
-						problem.matrix->set(k, j, -f * problem.matrix->get(problem.i, j) + problem.matrix->get(k, j));//делаем нули
-					}
+					problem.f = problem.matrix->get(problem.k, problem.i);
+					computationFor->execute();
 				}
 			}
 		}
-
-     	Statement *outputMatrixInitStatement = new OutputMatrixInitStatement(&problem);
-		Condition *outputMatrixCondition = new OutputMatrixCondition(&problem);
-		Statement *outputMatrixEndIterationStatement = new OutputMatrixEndIterationStatement(&problem);
-		Statement *outputMatrixBodyStatement = new OutputMatrixBodyStatement(&problem);
-		For *outputMatrix = new For(outputMatrixInitStatement, outputMatrixCondition, outputMatrixEndIterationStatement, outputMatrixBodyStatement);
 		outputMatrix->execute();
 		cout << endl;
-		delete outputMatrixInitStatement;
-		delete outputMatrixCondition;
-		delete outputMatrixEndIterationStatement;
-		delete outputMatrixBodyStatement;
-		delete outputMatrix;
 	}
 	catch(char *message)
 	{
 		cout << message << endl;
 	}
+	delete outputMatrixInitStatement;
+	delete outputMatrixCondition;
+	delete outputMatrixEndIterationStatement;
+	delete outputMatrixBodyStatement;
+	delete outputMatrix;
+    delete oneDiagonalElement;
+    delete oneDiagonalElementInitStatement;
+	delete oneDiagonalElementCondition;
+	delete oneDiagonalElementEndIterationStatement;
+	delete oneDiagonalElementBodyStatement;
 	delete nonZeroElementFor;
 	delete nonZeroElementForInitStatement;
 	delete nonZeroElementForCondition;

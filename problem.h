@@ -8,6 +8,8 @@ public:
 	Matrix* matrix;
 	bool error;
 	int i, j, k;
+	double f;
+
 };
 
 #endif
