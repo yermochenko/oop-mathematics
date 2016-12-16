@@ -8,9 +8,7 @@ using namespace std;
 #include "problem.h"
 #include "jg_for_input_matrix_from_stream.h"
 #include "jg_for_output_matrix.h"
-#include "jg_for_one_diagonal_element.h"
-#include "jg_if_zero.h"
-#include "jg_for_zeroes_in_column.h"
+#include "jg_for_making_e_matrix.h"
 
 int main()
 {
@@ -27,7 +25,9 @@ int main()
 	Statement *inputMatrixFromStreamEndIterationStatement = new InputMatrixFromStreamEndIterationStatement(&problem);
 	Statement *inputMatrixFromStreamBodyStatement = new InputMatrixFromStreamBodyStatement(&problem);
 	For *inputMatrixFromStream = new For(inputMatrixFromStreamInitStatement, inputMatrixFromStreamCondition, inputMatrixFromStreamEndIterationStatement, inputMatrixFromStreamBodyStatement);
+
 	inputMatrixFromStream->execute();
+
 	delete inputMatrixFromStream;
 	delete inputMatrixFromStreamInitStatement;
 	delete inputMatrixFromStreamCondition;
@@ -38,33 +38,23 @@ int main()
 
 	//Метод Жордана-Гаусса
 	//Прямой ход, приведение к верхнетреугольному виду
-	Condition *zeroElementCondition = new ZeroElementCondition(&problem);
-	Statement *zeroElementStatement = new ZeroElementStatement(&problem);
-	If *zeroElementIf = new If(zeroElementCondition, zeroElementStatement);
-	Statement *oneDiagonalElementInitStatement = new OneDiagonalElementInitStatement(&problem);
-	Condition *oneDiagonalElementCondition = new OneDiagonalElementCondition(&problem);
-	Statement *oneDiagonalElementEndIterationStatement = new OneDiagonalElementEndIterationStatement(&problem);
-	Statement *oneDiagonalElementBodyStatement = new OneDiagonalElementBodyStatement(&problem);
-	For *oneDiagonalElement = new For(oneDiagonalElementInitStatement, oneDiagonalElementCondition, oneDiagonalElementEndIterationStatement, oneDiagonalElementBodyStatement);
-	Statement *zeroInColumnForInitStatement = new ZeroInColumnForInitStatement(&problem);
-	Condition *zeroInColumnForCondition = new ZeroInColumnForCondition(&problem);
-	Statement *zeroInColumnForEndIterationStatement = new ZeroInColumnForEndIterationStatement(&problem);
-	Statement *zeroInColumnForBodyStatement = new ZeroInColumnForBodyStatement(&problem);
-	For *zeroInColumn = new For(zeroInColumnForInitStatement, zeroInColumnForCondition, zeroInColumnForEndIterationStatement, zeroInColumnForBodyStatement);
+
+
+
  	Statement *outputMatrixInitStatement = new OutputMatrixInitStatement(&problem);
 	Condition *outputMatrixCondition = new OutputMatrixCondition(&problem);
 	Statement *outputMatrixEndIterationStatement = new OutputMatrixEndIterationStatement(&problem);
 	Statement *outputMatrixBodyStatement = new OutputMatrixBodyStatement(&problem);
 	For *outputMatrix = new For(outputMatrixInitStatement, outputMatrixCondition, outputMatrixEndIterationStatement, outputMatrixBodyStatement);
+
+	Statement *makingEMatrixInitStatement = new MakingEMatrixInitStatement(&problem);
+	Condition *makingEMatrixCondition = new MakingEMatrixCondition(&problem);
+	Statement *makingEMatrixEndIterationStatement = new MakingEMatrixEndIterationStatement(&problem);
+	Statement *makingEMatrixBodyStatement = new MakingEMatrixBodyStatement(&problem);
+	For *makingEMatrix = new For(makingEMatrixInitStatement, makingEMatrixCondition, makingEMatrixEndIterationStatement, makingEMatrixBodyStatement);
 	try
 	{
-		for (problem.i = 0; problem.i < problem.matrix->rowsCount(); problem.i++)
-		{
-			zeroElementIf->execute();
-			problem.f = problem.matrix->get(problem.i, problem.i);
-			oneDiagonalElement->execute();
-			zeroInColumn->execute();
-		}
+        makingEMatrix->execute();
 		outputMatrix->execute();
 		cout << endl;
 	}
@@ -72,24 +62,18 @@ int main()
 	{
 		cout << message << endl;
 	}
-	delete zeroElementIf;
-	delete zeroElementCondition;
-	delete zeroElementStatement;
-	delete zeroInColumn;
-	delete zeroInColumnForInitStatement;
-	delete zeroInColumnForCondition;
-	delete zeroInColumnForEndIterationStatement;
-	delete zeroInColumnForBodyStatement;
+
+	delete makingEMatrixInitStatement;
+	delete makingEMatrixCondition;
+	delete makingEMatrixEndIterationStatement;
+	delete makingEMatrixBodyStatement;
+	delete makingEMatrix;
 	delete outputMatrixInitStatement;
 	delete outputMatrixCondition;
 	delete outputMatrixEndIterationStatement;
 	delete outputMatrixBodyStatement;
 	delete outputMatrix;
-	delete oneDiagonalElement;
-	delete oneDiagonalElementInitStatement;
-	delete oneDiagonalElementCondition;
-	delete oneDiagonalElementEndIterationStatement;
-	delete oneDiagonalElementBodyStatement;
+
 	delete problem.matrix;
 	return 0;
 }
