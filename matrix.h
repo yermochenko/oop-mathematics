@@ -14,4 +14,4 @@ public:
 	unsigned int colsCount();
 };
 
-#endif
+#endif /* MATRIX_H_ */

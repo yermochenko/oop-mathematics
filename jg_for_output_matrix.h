@@ -61,4 +61,4 @@ public:
 	}
 };
 
-#endif  JG_FOR_OUTPUT_MATRIX_H_
+#endif /* JG_FOR_OUTPUT_MATRIX_H_ */

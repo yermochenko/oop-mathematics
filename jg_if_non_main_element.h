@@ -50,4 +50,4 @@ public:
 	}
 };
 
-#endif
+#endif /* JG_IF_NON_MAIN_ELEMENT_H_ */

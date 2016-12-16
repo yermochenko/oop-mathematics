@@ -33,4 +33,4 @@ public:
 	void execute();
 };
 
-#endif
+#endif /* STRUCT_H_ */

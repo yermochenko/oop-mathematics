@@ -75,4 +75,4 @@ public:
 	}
 };
 
-#endif  JG_FOR_NON_ZERO_H_
+#endif /* JG_FOR_NON_ZERO_H_ */

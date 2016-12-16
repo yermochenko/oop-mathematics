@@ -1,5 +1,3 @@
-
-
 #ifndef JG_FOR_DIAGONAL_ELEMENT_H_
 #define JG_FOR_DIAGONAL_ELEMENT_H_
 

@@ -24,4 +24,4 @@ public:
 	}
 };
 
-#endif
+#endif /* JG_IF_ERROR_H_ */

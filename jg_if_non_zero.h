@@ -1,10 +1,3 @@
-/*
- * jg_if_non_zero.h
- *
- *  Created on: 12 дек. 2016 г.
- *      Author: User
- */
-
 #ifndef JG_IF_NON_ZERO_H_
 #define JG_IF_NON_ZERO_H_
 
