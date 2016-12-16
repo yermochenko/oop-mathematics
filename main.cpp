@@ -9,8 +9,8 @@ using namespace std;
 #include "jg_for_input_matrix_from_stream.h"
 #include "jg_for_output_matrix.h"
 #include "jg_for_one_diagonal_element.h"
-#include "jg_if_non_main_element.h"
 #include "jg_if_zero.h"
+#include "jg_for_zeroes_in_column.h"
 
 int main()
 {
@@ -41,14 +41,16 @@ int main()
 	Condition *zeroElementCondition = new ZeroElementCondition(&problem);
 	Statement *zeroElementStatement = new ZeroElementStatement(&problem);
 	If *zeroElementIf = new If(zeroElementCondition, zeroElementStatement);
-	Condition *nonMainElementCondition = new NonMainElementCondition(&problem);
-	Statement *nonMainElementStatement = new NonMainElementStatement(&problem);
-	If *nonMainElementIf = new If(nonMainElementCondition, nonMainElementStatement);
 	Statement *oneDiagonalElementInitStatement = new OneDiagonalElementInitStatement(&problem);
 	Condition *oneDiagonalElementCondition = new OneDiagonalElementCondition(&problem);
 	Statement *oneDiagonalElementEndIterationStatement = new OneDiagonalElementEndIterationStatement(&problem);
 	Statement *oneDiagonalElementBodyStatement = new OneDiagonalElementBodyStatement(&problem);
 	For *oneDiagonalElement = new For(oneDiagonalElementInitStatement, oneDiagonalElementCondition, oneDiagonalElementEndIterationStatement, oneDiagonalElementBodyStatement);
+	Statement *zeroInColumnForInitStatement = new ZeroInColumnForInitStatement(&problem);
+	Condition *zeroInColumnForCondition = new ZeroInColumnForCondition(&problem);
+	Statement *zeroInColumnForEndIterationStatement = new ZeroInColumnForEndIterationStatement(&problem);
+	Statement *zeroInColumnForBodyStatement = new ZeroInColumnForBodyStatement(&problem);
+	For *zeroInColumn = new For(zeroInColumnForInitStatement, zeroInColumnForCondition, zeroInColumnForEndIterationStatement, zeroInColumnForBodyStatement);
  	Statement *outputMatrixInitStatement = new OutputMatrixInitStatement(&problem);
 	Condition *outputMatrixCondition = new OutputMatrixCondition(&problem);
 	Statement *outputMatrixEndIterationStatement = new OutputMatrixEndIterationStatement(&problem);
@@ -61,10 +63,11 @@ int main()
 			zeroElementIf->execute();
 			problem.f = problem.matrix->get(problem.i, problem.i);
 			oneDiagonalElement->execute();
-			for (problem.k = 0; problem.k < problem.matrix->rowsCount(); problem.k++)
+			/*for (problem.k = 0; problem.k < problem.matrix->rowsCount(); problem.k++)
 			{
 				nonMainElementIf->execute();
-			}
+			}*/
+			zeroInColumn->execute();
 		}
 		outputMatrix->execute();
 		cout << endl;
@@ -76,9 +79,11 @@ int main()
 	delete zeroElementIf;
 	delete zeroElementCondition;
 	delete zeroElementStatement;
-	delete nonMainElementCondition;
-	delete nonMainElementStatement;
-	delete nonMainElementIf;
+	delete zeroInColumn;
+	delete zeroInColumnForInitStatement;
+	delete zeroInColumnForCondition;
+	delete zeroInColumnForEndIterationStatement;
+	delete zeroInColumnForBodyStatement;
 	delete outputMatrixInitStatement;
 	delete outputMatrixCondition;
 	delete outputMatrixEndIterationStatement;
