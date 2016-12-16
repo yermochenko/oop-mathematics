@@ -1,7 +1,7 @@
 #ifndef JG_IF_NON_MAIN_ELEMENT_H_
 #define JG_IF_NON_MAIN_ELEMENT_H_
 
-#include "jg_ for_computation.h"
+#include "jg_for_computation.h"
 
 class NonMainElementCondition: public Condition
 {

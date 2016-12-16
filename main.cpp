@@ -63,10 +63,6 @@ int main()
 			zeroElementIf->execute();
 			problem.f = problem.matrix->get(problem.i, problem.i);
 			oneDiagonalElement->execute();
-			/*for (problem.k = 0; problem.k < problem.matrix->rowsCount(); problem.k++)
-			{
-				nonMainElementIf->execute();
-			}*/
 			zeroInColumn->execute();
 		}
 		outputMatrix->execute();
