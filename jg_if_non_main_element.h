@@ -50,4 +50,19 @@ public:
 	}
 };
 
+class NonMainElementIf: public If {
+	Condition *nonMainElementCondition;
+	Statement *nonMainElementStatement;
+public:
+	NonMainElementIf(Problem *problem) : If(
+		nonMainElementCondition = new NonMainElementCondition(problem),
+		nonMainElementStatement = new NonMainElementStatement(problem)
+	) {}
+	~NonMainElementIf()
+	{
+		delete nonMainElementCondition;
+		delete nonMainElementStatement;
+	}
+};
+
 #endif /* JG_IF_NON_MAIN_ELEMENT_H_ */

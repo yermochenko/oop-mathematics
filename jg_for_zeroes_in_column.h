@@ -51,17 +51,11 @@ public:
 
 class ZeroInColumnForBodyStatement: public Statement
 {
-	Problem *problem;
-	Condition *nonMainElementCondition;
-	Statement *nonMainElementStatement;
 	If *nonMainElementIf;
 public:
 	ZeroInColumnForBodyStatement(Problem *problem)
 	{
-		this->problem = problem;
-		nonMainElementCondition = new NonMainElementCondition(problem);
-		nonMainElementStatement = new NonMainElementStatement(problem);
-		nonMainElementIf = new If(nonMainElementCondition, nonMainElementStatement);
+		nonMainElementIf = new NonMainElementIf(problem);
 	}
 	void execute()
 	{
@@ -69,8 +63,6 @@ public:
 	}
 	~ZeroInColumnForBodyStatement()
 	{
-		delete nonMainElementCondition;
-		delete nonMainElementStatement;
 		delete nonMainElementIf;
 	}
 };
