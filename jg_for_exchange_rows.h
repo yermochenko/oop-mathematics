@@ -59,4 +59,26 @@ public:
 	}
 };
 
+class ExchangeRowsElementFor : public For
+{
+	Statement *exchangeRowsElementInitStatement;
+	Condition *exchangeRowsElementCondition;
+	Statement *exchangeRowsElementEndIterationStatement;
+	Statement *exchangeRowsElementBodyStatement;
+public:
+	ExchangeRowsElementFor(Problem *problem) : For(
+		exchangeRowsElementInitStatement = new ExchangeRowsElementInitStatement(problem),
+		exchangeRowsElementCondition = new ExchangeRowsElementCondition(problem),
+		exchangeRowsElementEndIterationStatement = new ExchangeRowsElementEndIterationStatement(problem),
+		exchangeRowsElementBodyStatement = new ExchangeRowsElementBodyStatement(problem)
+	) {}
+	~ExchangeRowsElementFor()
+	{
+		delete exchangeRowsElementInitStatement;
+		delete exchangeRowsElementCondition;
+		delete exchangeRowsElementEndIterationStatement;
+		delete exchangeRowsElementBodyStatement;
+	}
+};
+
 #endif /* JG_FOR_EXCHANGE_ROWS_H_ */
