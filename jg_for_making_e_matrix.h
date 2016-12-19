@@ -54,11 +54,6 @@ class MakingEMatrixBodyStatement: public Statement
 	Problem *problem;
 	If *zeroElementIf;
 	For *oneDiagonalElement;
-
-	Statement *zeroInColumnForInitStatement;
-	Condition *zeroInColumnForCondition ;
-	Statement *zeroInColumnForEndIterationStatement;
-	Statement *zeroInColumnForBodyStatement;
 	For *zeroInColumn;
 public:
 	MakingEMatrixBodyStatement(Problem *problem)
@@ -66,12 +61,7 @@ public:
 		this->problem = problem;
 		zeroElementIf = new ZeroElementIf(problem);
 		oneDiagonalElement = new OneDiagonalElement(problem);
-
-		zeroInColumnForInitStatement = new ZeroInColumnForInitStatement(problem);
-		zeroInColumnForCondition = new ZeroInColumnForCondition(problem);
-		zeroInColumnForEndIterationStatement = new ZeroInColumnForEndIterationStatement(problem);
-		zeroInColumnForBodyStatement = new ZeroInColumnForBodyStatement(problem);
-		zeroInColumn = new For(zeroInColumnForInitStatement, zeroInColumnForCondition, zeroInColumnForEndIterationStatement, zeroInColumnForBodyStatement);
+		zeroInColumn = new ZeroInColumn(problem);
 	}
 	void execute()
 	{
@@ -85,10 +75,6 @@ public:
 		delete zeroElementIf;
 		delete oneDiagonalElement;
 		delete zeroInColumn;
-		delete zeroInColumnForInitStatement;
-		delete zeroInColumnForCondition;
-		delete zeroInColumnForEndIterationStatement;
-		delete zeroInColumnForBodyStatement;
 	}
 };
 

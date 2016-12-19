@@ -75,4 +75,26 @@ public:
 	}
 };
 
+class ZeroInColumn:public For
+{
+	Statement *zeroInColumnInitStatement;
+	Condition *zeroInColumnCondition;
+	Statement *zeroInColumnEndIterationStatement;
+	Statement *zeroInColumnBodyStatement;
+public:
+	ZeroInColumn(Problem* problem) : For (
+		zeroInColumnInitStatement = new ZeroInColumnForInitStatement(problem),
+		zeroInColumnCondition = new ZeroInColumnForCondition(problem),
+		zeroInColumnEndIterationStatement = new ZeroInColumnForEndIterationStatement(problem),
+		zeroInColumnBodyStatement = new ZeroInColumnForBodyStatement(problem)
+	) {}
+	~ZeroInColumn()
+	{
+		delete zeroInColumnInitStatement;
+		delete zeroInColumnCondition;
+		delete zeroInColumnEndIterationStatement;
+		delete zeroInColumnBodyStatement;
+	}
+};
+
 #endif /* JG_FOR_ZERO_IN_COLUMNS_H_ */
