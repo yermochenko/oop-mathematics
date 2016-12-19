@@ -67,4 +67,26 @@ public:
 	}
 };
 
+class NonZeroElementFor : public For
+{
+	NonZeroElementForInitStatement *nonZeroElementForInitStatement;
+	NonZeroElementForCondition *nonZeroElementForCondition;
+	NonZeroElementForEndIterationStatement *nonZeroElementForEndIterationStatement;
+	NonZeroElementForBodyStatement *nonZeroElementForBodyStatement;
+public:
+	NonZeroElementFor(Problem *problem) : For(
+		nonZeroElementForInitStatement = new NonZeroElementForInitStatement(problem),
+		nonZeroElementForCondition = new NonZeroElementForCondition(problem),
+		nonZeroElementForEndIterationStatement = new NonZeroElementForEndIterationStatement(problem),
+		nonZeroElementForBodyStatement = new NonZeroElementForBodyStatement(problem)
+	) {}
+	~NonZeroElementFor()
+	{
+		delete nonZeroElementForInitStatement;
+		delete nonZeroElementForCondition;
+		delete nonZeroElementForEndIterationStatement;
+		delete nonZeroElementForBodyStatement;
+	}
+};
+
 #endif /* JG_FOR_NON_ZERO_H_ */

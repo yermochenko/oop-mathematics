@@ -21,10 +21,6 @@ public:
 class ZeroElementStatement: public Statement
 {
 	Problem *problem;
-	NonZeroElementForInitStatement *nonZeroElementForInitStatement;
-	NonZeroElementForCondition *nonZeroElementForCondition;
-	NonZeroElementForEndIterationStatement *nonZeroElementForEndIterationStatement;
-	NonZeroElementForBodyStatement *nonZeroElementForBodyStatement;
 	For *nonZeroElementFor;
 	Condition *errorCondition;
 	Statement *errorStatement;
@@ -33,11 +29,7 @@ public:
 	ZeroElementStatement(Problem *problem)
 	{
 		this->problem = problem;
-		nonZeroElementForInitStatement = new NonZeroElementForInitStatement(problem);
-		nonZeroElementForCondition = new NonZeroElementForCondition(problem);
-		nonZeroElementForEndIterationStatement = new NonZeroElementForEndIterationStatement(problem);
-		nonZeroElementForBodyStatement = new NonZeroElementForBodyStatement(problem);
-		nonZeroElementFor = new For(nonZeroElementForInitStatement, nonZeroElementForCondition, nonZeroElementForEndIterationStatement, nonZeroElementForBodyStatement);
+		nonZeroElementFor = new NonZeroElementFor(problem);
 		errorCondition = new ErrorCondition(problem);
 		errorStatement = new ErrorStatement();
 		errorIf = new If(errorCondition, errorStatement);
@@ -54,10 +46,6 @@ public:
 		delete errorStatement;
 		delete errorCondition;
 		delete nonZeroElementFor;
-		delete nonZeroElementForInitStatement;
-		delete nonZeroElementForCondition;
-		delete nonZeroElementForEndIterationStatement;
-		delete nonZeroElementForBodyStatement;
 	}
 };
 
