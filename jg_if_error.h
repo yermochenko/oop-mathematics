@@ -24,4 +24,20 @@ public:
 	}
 };
 
+class ErrorIf : public If
+{
+	Condition *errorCondition;
+	Statement *errorStatement;
+public:
+	ErrorIf(Problem *problem) : If(
+		errorCondition = new ErrorCondition(problem),
+		errorStatement = new ErrorStatement()
+	) {}
+	~ErrorIf()
+	{
+		delete errorStatement;
+		delete errorCondition;
+	}
+};
+
 #endif /* JG_IF_ERROR_H_ */

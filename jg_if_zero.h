@@ -22,17 +22,13 @@ class ZeroElementStatement: public Statement
 {
 	Problem *problem;
 	For *nonZeroElementFor;
-	Condition *errorCondition;
-	Statement *errorStatement;
 	If *errorIf;
 public:
 	ZeroElementStatement(Problem *problem)
 	{
 		this->problem = problem;
 		nonZeroElementFor = new NonZeroElementFor(problem);
-		errorCondition = new ErrorCondition(problem);
-		errorStatement = new ErrorStatement();
-		errorIf = new If(errorCondition, errorStatement);
+		errorIf = new ErrorIf(problem);
 	}
 	void execute()
 	{
@@ -43,8 +39,6 @@ public:
 	~ZeroElementStatement()
 	{
 		delete errorIf;
-		delete errorStatement;
-		delete errorCondition;
 		delete nonZeroElementFor;
 	}
 };
