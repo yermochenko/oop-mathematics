@@ -20,20 +20,12 @@ public:
 class NonMainElementStatement: public Statement
 {
 	Problem* problem;
-	Statement *computationForInitStatement;
-	Condition *computationForCondition;
-	Statement *computationForEndIterationStatement;
-	Statement *computationForBodyStatement;
 	For *computationFor;
 public:
 	NonMainElementStatement(Problem* problem)
 	{
 		this->problem = problem;
-		computationForInitStatement = new ComputationForInitStatement(problem);
-		computationForCondition = new ComputationForCondition(problem);
-		computationForEndIterationStatement = new ComputationForEndIterationStatement(problem);
-		computationForBodyStatement = new ComputationForBodyStatement(problem);
-		computationFor = new For(computationForInitStatement, computationForCondition, computationForEndIterationStatement, computationForBodyStatement);
+		computationFor = new ComputationFor(problem);
 	}
 	void execute()
 	{
@@ -43,10 +35,6 @@ public:
 	~NonMainElementStatement()
 	{
 		delete computationFor;
-		delete computationForInitStatement;
-		delete computationForCondition;
-		delete computationForEndIterationStatement;
-		delete computationForBodyStatement;
 	}
 };
 

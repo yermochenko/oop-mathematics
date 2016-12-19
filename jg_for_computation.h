@@ -57,4 +57,26 @@ public:
 	}
 };
 
+class ComputationFor : public For
+{
+	Statement *computationForInitStatement;
+	Condition *computationForCondition;
+	Statement *computationForEndIterationStatement;
+	Statement *computationForBodyStatement;
+public:
+	ComputationFor(Problem *problem) : For(
+		computationForInitStatement = new ComputationForInitStatement(problem),
+		computationForCondition = new ComputationForCondition(problem),
+		computationForEndIterationStatement = new ComputationForEndIterationStatement(problem),
+		computationForBodyStatement = new ComputationForBodyStatement(problem)
+	) {}
+	~ComputationFor()
+	{
+		delete computationForInitStatement;
+		delete computationForCondition;
+		delete computationForEndIterationStatement;
+		delete computationForBodyStatement;
+	}
+};
+
 #endif /* JG_FOR_COMPUTATION_H_ */
