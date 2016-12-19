@@ -113,4 +113,26 @@ public:
 	}
 };
 
+class MakingEMatrix: public For
+{
+	Statement *makingEMatrixInitStatement;
+	Condition *makingEMatrixCondition;
+	Statement *makingEMatrixEndIterationStatement;
+	Statement *makingEMatrixBodyStatement;
+public:
+	MakingEMatrix(Problem *problem) : For(
+		makingEMatrixInitStatement = new MakingEMatrixInitStatement(problem),
+		makingEMatrixCondition = new MakingEMatrixCondition(problem),
+		makingEMatrixEndIterationStatement = new MakingEMatrixEndIterationStatement(problem),
+		makingEMatrixBodyStatement = new MakingEMatrixBodyStatement(problem)
+	) {}
+	~MakingEMatrix()
+	{
+		delete makingEMatrixInitStatement;
+		delete makingEMatrixCondition;
+		delete makingEMatrixEndIterationStatement;
+		delete makingEMatrixBodyStatement;
+	}
+};
+
 #endif /* JG_FOR_MAKING_E_MATRIX_H_ */

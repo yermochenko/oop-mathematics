@@ -26,11 +26,7 @@ int main()
 
 	problem.fs->close();
 
-	Statement *makingEMatrixInitStatement = new MakingEMatrixInitStatement(&problem);
-	Condition *makingEMatrixCondition = new MakingEMatrixCondition(&problem);
-	Statement *makingEMatrixEndIterationStatement = new MakingEMatrixEndIterationStatement(&problem);
-	Statement *makingEMatrixBodyStatement = new MakingEMatrixBodyStatement(&problem);
-	For *makingEMatrix = new For(makingEMatrixInitStatement, makingEMatrixCondition, makingEMatrixEndIterationStatement, makingEMatrixBodyStatement);
+	MakingEMatrix *makingEMatrix = new MakingEMatrix(&problem);
 
  	Statement *outputMatrixInitStatement = new OutputMatrixInitStatement(&problem);
 	Condition *outputMatrixCondition = new OutputMatrixCondition(&problem);
@@ -51,10 +47,6 @@ int main()
 		cout << message << endl;
 	}
 
-	delete makingEMatrixInitStatement;
-	delete makingEMatrixCondition;
-	delete makingEMatrixEndIterationStatement;
-	delete makingEMatrixBodyStatement;
 	delete makingEMatrix;
 	delete outputMatrixInitStatement;
 	delete outputMatrixCondition;
