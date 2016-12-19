@@ -52,21 +52,11 @@ public:
 
 class InputMatrixFromStreamBodyStatement: public Statement
 {
-	Problem *problem;
-	Statement *inputRowFromStreamInitStatement;
-	Condition *inputRowFromStreamCondition;
-	Statement *inputRowFromStreamEndIterationStatement;
-	Statement *inputRowFromStreamBodyStatement;
 	For *inputRowFromStream;
 public:
 	InputMatrixFromStreamBodyStatement(Problem *problem)
 	{
-		this->problem = problem;
-		inputRowFromStreamInitStatement = new InputRowFromStreamInitStatement(problem);
-		inputRowFromStreamCondition = new InputRowFromStreamCondition(problem);
-		inputRowFromStreamEndIterationStatement = new InputRowFromStreamEndIterationStatement(problem);
-		inputRowFromStreamBodyStatement = new InputRowFromStreamBodyStatement(problem);
-		inputRowFromStream = new For(inputRowFromStreamInitStatement, inputRowFromStreamCondition, inputRowFromStreamEndIterationStatement, inputRowFromStreamBodyStatement);
+		inputRowFromStream = new InputRowFromStream(problem);
 	}
 	void execute()
 	{
@@ -76,10 +66,6 @@ public:
 	~InputMatrixFromStreamBodyStatement()
 	{
 		delete inputRowFromStream;
-		delete inputRowFromStreamInitStatement;
-		delete inputRowFromStreamCondition;
-		delete inputRowFromStreamEndIterationStatement;
-		delete inputRowFromStreamBodyStatement;
 	}
 };
 

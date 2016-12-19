@@ -64,4 +64,26 @@ public:
 	}
 };
 
+class InputRowFromStream : public For
+{
+	Statement *inputRowFromStreamInitStatement;
+	Condition *inputRowFromStreamCondition;
+	Statement *inputRowFromStreamEndIterationStatement;
+	Statement *inputRowFromStreamBodyStatement;
+public:
+	InputRowFromStream(Problem *problem) : For (
+		inputRowFromStreamInitStatement = new InputRowFromStreamInitStatement(problem),
+		inputRowFromStreamCondition = new InputRowFromStreamCondition(problem),
+		inputRowFromStreamEndIterationStatement = new InputRowFromStreamEndIterationStatement(problem),
+		inputRowFromStreamBodyStatement = new InputRowFromStreamBodyStatement(problem)
+	) {}
+	~InputRowFromStream()
+	{
+		delete inputRowFromStreamInitStatement;
+		delete inputRowFromStreamCondition;
+		delete inputRowFromStreamEndIterationStatement;
+		delete inputRowFromStreamBodyStatement;
+	}
+};
+
 #endif /* JG_FOR_INPUT_ROW_FROM_STREAM_H_ */
