@@ -61,4 +61,20 @@ public:
 	}
 };
 
+class ZeroElementIf : public If
+{
+	Condition *zeroElementCondition ;
+	Statement *zeroElementStatement;
+public:
+	ZeroElementIf(Problem *problem) : If(
+		zeroElementCondition = new ZeroElementCondition(problem),
+		zeroElementStatement = new ZeroElementStatement(problem)
+	) {}
+	~ZeroElementIf()
+	{
+		delete zeroElementCondition;
+		delete zeroElementStatement;
+	}
+};
+
 #endif /* JG_IF_ZERO_H_ */

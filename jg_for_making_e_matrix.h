@@ -52,8 +52,6 @@ public:
 class MakingEMatrixBodyStatement: public Statement
 {
 	Problem *problem;
-	Condition *zeroElementCondition ;
-	Statement *zeroElementStatement;
 	If *zeroElementIf;
 
 	Statement *oneDiagonalElementInitStatement;
@@ -71,9 +69,7 @@ public:
 	MakingEMatrixBodyStatement(Problem *problem)
 	{
 		this->problem = problem;
-		zeroElementCondition = new ZeroElementCondition(problem);
-		zeroElementStatement = new ZeroElementStatement(problem);
-		zeroElementIf = new If(zeroElementCondition, zeroElementStatement);
+		zeroElementIf = new ZeroElementIf(problem);
 
 		oneDiagonalElementInitStatement = new OneDiagonalElementInitStatement(problem);
 		oneDiagonalElementCondition = new OneDiagonalElementCondition(problem);
@@ -90,16 +86,13 @@ public:
 	void execute()
 	{
 		zeroElementIf->execute();
-	    problem->f = problem->matrix->get(problem->i, problem->i);
-	    oneDiagonalElement->execute();
-	    zeroInColumn->execute();
-
+		problem->f = problem->matrix->get(problem->i, problem->i);
+		oneDiagonalElement->execute();
+		zeroInColumn->execute();
 	}
 	~MakingEMatrixBodyStatement()
 	{
 		delete zeroElementIf;
-		delete zeroElementCondition;
-		delete zeroElementStatement;
 		delete oneDiagonalElement;
 		delete oneDiagonalElementInitStatement;
 		delete oneDiagonalElementCondition;
