@@ -61,4 +61,26 @@ public:
 	}
 };
 
+class OutputMatrix: public For
+{
+	Statement *outputMatrixInitStatement;
+	Condition *outputMatrixCondition;
+	Statement *outputMatrixEndIterationStatement;
+	Statement *outputMatrixBodyStatement;
+public:
+	OutputMatrix(Problem *problem) : For(
+		outputMatrixInitStatement = new OutputMatrixInitStatement(problem),
+		outputMatrixCondition = new OutputMatrixCondition(problem),
+		outputMatrixEndIterationStatement = new OutputMatrixEndIterationStatement(problem),
+		outputMatrixBodyStatement = new OutputMatrixBodyStatement(problem)
+	) {}
+	~OutputMatrix()
+	{
+		delete outputMatrixInitStatement;
+		delete outputMatrixCondition;
+		delete outputMatrixEndIterationStatement;
+		delete outputMatrixBodyStatement;
+	}
+};
+
 #endif /* JG_FOR_OUTPUT_MATRIX_H_ */

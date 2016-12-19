@@ -7,8 +7,8 @@ using namespace std;
 #include "struct.h"
 #include "problem.h"
 #include "jg_for_input_matrix_from_stream.h"
-#include "jg_for_output_matrix.h"
 #include "jg_for_making_e_matrix.h"
+#include "jg_for_output_matrix.h"
 
 int main()
 {
@@ -27,12 +27,7 @@ int main()
 	problem.fs->close();
 
 	MakingEMatrix *makingEMatrix = new MakingEMatrix(&problem);
-
- 	Statement *outputMatrixInitStatement = new OutputMatrixInitStatement(&problem);
-	Condition *outputMatrixCondition = new OutputMatrixCondition(&problem);
-	Statement *outputMatrixEndIterationStatement = new OutputMatrixEndIterationStatement(&problem);
-	Statement *outputMatrixBodyStatement = new OutputMatrixBodyStatement(&problem);
-	For *outputMatrix = new For(outputMatrixInitStatement, outputMatrixCondition, outputMatrixEndIterationStatement, outputMatrixBodyStatement);
+	OutputMatrix *outputMatrix = new OutputMatrix(&problem);
 
 	//Метод Жордана-Гаусса
 	//Прямой ход, приведение к верхнетреугольному виду
@@ -48,10 +43,6 @@ int main()
 	}
 
 	delete makingEMatrix;
-	delete outputMatrixInitStatement;
-	delete outputMatrixCondition;
-	delete outputMatrixEndIterationStatement;
-	delete outputMatrixBodyStatement;
 	delete outputMatrix;
 
 	delete problem.matrix;
