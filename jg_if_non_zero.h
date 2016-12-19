@@ -50,4 +50,20 @@ public:
 	}
 };
 
+class NonZeroElementIf : public If
+{
+	Condition *nonZeroElementCondition;
+	Statement *nonZeroElementStatement;
+public:
+	NonZeroElementIf(Problem *problem) : If(
+		nonZeroElementCondition = new NonZeroElementCondition(problem),
+		nonZeroElementStatement = new NonZeroElementStatement(problem)
+	) {}
+	~NonZeroElementIf()
+	{
+		delete nonZeroElementStatement;
+		delete nonZeroElementCondition;
+	}
+};
+
 #endif /* JG_IF_NON_ZERO_H_ */

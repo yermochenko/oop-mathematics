@@ -51,17 +51,11 @@ public:
 
 class NonZeroElementForBodyStatement: public Statement
 {
-	Problem *problem;
-	Condition *nonZeroElementCondition;
-	Statement *nonZeroElementStatement;
 	If *nonZeroElementIf;
 public:
 	NonZeroElementForBodyStatement(Problem *problem)
 	{
-		this->problem = problem;
-		nonZeroElementCondition = new NonZeroElementCondition(problem);
-		nonZeroElementStatement = new NonZeroElementStatement(problem);
-		nonZeroElementIf = new If(nonZeroElementCondition, nonZeroElementStatement);
+		nonZeroElementIf = new NonZeroElementIf(problem);
 	}
 	void execute()
 	{
@@ -70,8 +64,6 @@ public:
 	~NonZeroElementForBodyStatement()
 	{
 		delete nonZeroElementIf;
-		delete nonZeroElementStatement;
-		delete nonZeroElementCondition;
 	}
 };
 
