@@ -20,26 +20,17 @@ int main()
 	problem.fs->operator>>(n);
 	problem.matrix = new Matrix(n, n + 1);
 
-	Statement *inputMatrixFromStreamInitStatement = new InputMatrixFromStreamInitStatement(&problem);
-	Condition *inputMatrixFromStreamCondition = new InputMatrixFromStreamCondition(&problem);
-	Statement *inputMatrixFromStreamEndIterationStatement = new InputMatrixFromStreamEndIterationStatement(&problem);
-	Statement *inputMatrixFromStreamBodyStatement = new InputMatrixFromStreamBodyStatement(&problem);
-	For *inputMatrixFromStream = new For(inputMatrixFromStreamInitStatement, inputMatrixFromStreamCondition, inputMatrixFromStreamEndIterationStatement, inputMatrixFromStreamBodyStatement);
-
+	InputMatrixFromStream *inputMatrixFromStream = new InputMatrixFromStream(&problem);
 	inputMatrixFromStream->execute();
-
 	delete inputMatrixFromStream;
-	delete inputMatrixFromStreamInitStatement;
-	delete inputMatrixFromStreamCondition;
-	delete inputMatrixFromStreamEndIterationStatement;
-	delete inputMatrixFromStreamBodyStatement;
 
 	problem.fs->close();
 
-	//Метод Жордана-Гаусса
-	//Прямой ход, приведение к верхнетреугольному виду
-
-
+	Statement *makingEMatrixInitStatement = new MakingEMatrixInitStatement(&problem);
+	Condition *makingEMatrixCondition = new MakingEMatrixCondition(&problem);
+	Statement *makingEMatrixEndIterationStatement = new MakingEMatrixEndIterationStatement(&problem);
+	Statement *makingEMatrixBodyStatement = new MakingEMatrixBodyStatement(&problem);
+	For *makingEMatrix = new For(makingEMatrixInitStatement, makingEMatrixCondition, makingEMatrixEndIterationStatement, makingEMatrixBodyStatement);
 
  	Statement *outputMatrixInitStatement = new OutputMatrixInitStatement(&problem);
 	Condition *outputMatrixCondition = new OutputMatrixCondition(&problem);
@@ -47,14 +38,11 @@ int main()
 	Statement *outputMatrixBodyStatement = new OutputMatrixBodyStatement(&problem);
 	For *outputMatrix = new For(outputMatrixInitStatement, outputMatrixCondition, outputMatrixEndIterationStatement, outputMatrixBodyStatement);
 
-	Statement *makingEMatrixInitStatement = new MakingEMatrixInitStatement(&problem);
-	Condition *makingEMatrixCondition = new MakingEMatrixCondition(&problem);
-	Statement *makingEMatrixEndIterationStatement = new MakingEMatrixEndIterationStatement(&problem);
-	Statement *makingEMatrixBodyStatement = new MakingEMatrixBodyStatement(&problem);
-	For *makingEMatrix = new For(makingEMatrixInitStatement, makingEMatrixCondition, makingEMatrixEndIterationStatement, makingEMatrixBodyStatement);
+	//Метод Жордана-Гаусса
+	//Прямой ход, приведение к верхнетреугольному виду
 	try
 	{
-        makingEMatrix->execute();
+		makingEMatrix->execute();
 		outputMatrix->execute();
 		cout << endl;
 	}

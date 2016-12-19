@@ -5,6 +5,7 @@
 
 using namespace std;
 
+#include "struct.h"
 #include "jg_for_input_row_from_stream.h"
 
 class InputMatrixFromStreamInitStatement: public Statement
@@ -69,12 +70,6 @@ public:
 	}
 	void execute()
 	{
-		/*for (unsigned int j = 0; j < problem.matrix->colsCount(); j++)
-		{
-			fs >> e;
-			problem.matrix->set(i, j, e);
-			cout << e << "\t";
-		}*/
 		inputRowFromStream->execute();
 		cout << endl;
 	}
@@ -85,6 +80,28 @@ public:
 		delete inputRowFromStreamCondition;
 		delete inputRowFromStreamEndIterationStatement;
 		delete inputRowFromStreamBodyStatement;
+	}
+};
+
+class InputMatrixFromStream: public For
+{
+	Statement *inputMatrixFromStreamInitStatement;
+	Condition *inputMatrixFromStreamCondition;
+	Statement *inputMatrixFromStreamEndIterationStatement;
+	Statement *inputMatrixFromStreamBodyStatement;
+public:
+	InputMatrixFromStream(Problem *problem) : For(
+		inputMatrixFromStreamInitStatement = new InputMatrixFromStreamInitStatement(problem),
+		inputMatrixFromStreamCondition = new InputMatrixFromStreamCondition(problem),
+		inputMatrixFromStreamEndIterationStatement = new InputMatrixFromStreamEndIterationStatement(problem),
+		inputMatrixFromStreamBodyStatement = new InputMatrixFromStreamBodyStatement(problem)
+	) {}
+	~InputMatrixFromStream()
+	{
+		delete inputMatrixFromStreamInitStatement;
+		delete inputMatrixFromStreamCondition;
+		delete inputMatrixFromStreamEndIterationStatement;
+		delete inputMatrixFromStreamBodyStatement;
 	}
 };
 
